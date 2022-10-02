@@ -1,4 +1,4 @@
-# board_game_dreamer
+# Board Game Dreamer
 
 A new Flutter project.
 

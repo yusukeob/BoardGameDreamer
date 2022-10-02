@@ -1,29 +1,29 @@
-import 'package:board_game_dreamer/screens/create_account.dart';
-import 'package:board_game_dreamer/screens/home.dart';
+import 'package:board_game_dreamer/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:board_game_dreamer/main.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class CreateAccountPage extends StatefulWidget {
+  const CreateAccountPage({super.key});
 
-  static const String pageName = "Login";
+  static const String pageName = "Create Account";
   final String title = "$pageName -  ${MyApp.appName}";
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<CreateAccountPage> createState() => _CreateAccountPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  String? _username = "yob";
-  String? _password = "yob";
+class _CreateAccountPageState extends State<CreateAccountPage> {
+  String? _username = "";
+  String? _password = "";
+  String? _checkPassword = "";
   final _formKey = GlobalKey<FormState>();
 
-  void _validateLogin() {
+  void _validateCreateAccount() {
     _formKey.currentState?.save();
-    if (_username == "yob" && _password == "yob") {
+    if (_username != "" && _password != "" && _password == _checkPassword) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => const HomePage(),
+          builder: (context) => const LoginPage(),
         ),
       );
     }
@@ -35,19 +35,6 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const CreateAccountPage(),
-            ),
-          );
-        },
-        label: const Text('Create Account'),
-        icon: const Icon(Icons.add_outlined),
-        backgroundColor: Colors.green,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -62,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                       initialValue: _username,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(),
-                        labelText: 'Enter your username',
+                        labelText: 'Enter your username(email)',
                       ),
                       onSaved: (String? value) {
                         _username = value;
@@ -76,6 +63,16 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onSaved: (String? value) {
                         _password = value;
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: _checkPassword,
+                      decoration: const InputDecoration(
+                        border: UnderlineInputBorder(),
+                        labelText: 'Re-enter your password',
+                      ),
+                      onSaved: (String? value) {
+                        _checkPassword = value;
                       },
                     ),
                   ],
@@ -105,8 +102,8 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.all(16.0),
                         textStyle: const TextStyle(fontSize: 20),
                       ),
-                      onPressed: _validateLogin,
-                      child: const Text('Login'),
+                      onPressed: _validateCreateAccount,
+                      child: const Text('Create Account'),
                     ),
                   ],
                 ),

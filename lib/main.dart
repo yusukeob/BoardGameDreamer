@@ -8,6 +8,8 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  static const String appName = "Board Game Dreamer";
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
