@@ -1,26 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:board_game_dreamer/main.dart';
-import 'package:board_game_dreamer/screens/projects.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ProjectsPage extends StatefulWidget {
+  const ProjectsPage({super.key});
 
-  static const String pageName = "Home";
+  static const String pageName = "Projects";
   final String title = "$pageName -  ${MyApp.appName}";
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProjectsPage> createState() => _ProjectsPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  void _goToProjects() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const ProjectsPage(),
-      ),
-    );
-  }
-
+class _ProjectsPageState extends State<ProjectsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,8 +48,8 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(16.0),
                         textStyle: const TextStyle(fontSize: 20),
                       ),
-                      onPressed: _goToProjects,
-                      child: const Text('Projects'),
+                      onPressed: () => {},
+                      child: const Text('Project List'),
                     ),
                   ],
                 ),
