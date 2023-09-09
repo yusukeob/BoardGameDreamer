@@ -1,8 +1,11 @@
 import 'package:board_game_dreamer/screens/login.dart';
+import 'package:board_game_dreamer/services/sqlite_service.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
+
+  SqliteService().initializeDB();
 }
 
 class MyApp extends StatelessWidget {

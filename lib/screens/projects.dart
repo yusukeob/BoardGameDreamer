@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:board_game_dreamer/main.dart';
+import 'package:board_game_dreamer/services/sqlite_service.dart';
 
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({super.key});
@@ -12,6 +13,13 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> {
+  String _sUsers = "Project List";
+  void _getUsers() async {
+    var users = await SqliteService().getAllUsers();
+    _sUsers = users.toString();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +56,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         padding: const EdgeInsets.all(16.0),
                         textStyle: const TextStyle(fontSize: 20),
                       ),
-                      onPressed: () => {},
-                      child: const Text('Project List'),
+                      onPressed: _getUsers,
+                      child: Text(_sUsers),
                     ),
                   ],
                 ),
