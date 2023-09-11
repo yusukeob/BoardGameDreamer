@@ -9,10 +9,10 @@ class SqliteService {
     final dbDirectory = await getApplicationSupportDirectory();
 
     return openDatabase(
-      join(dbDirectory.path, 'bgd_database.db'),
+      join(dbDirectory.path, 'board_game_dreamer_database.db'),
       onCreate: (database, version) async {
         return database.execute(
-          'CREATE TABLE users(id INTEGER PRIMARY KEY, username TEXT, password TEXT)',
+          'CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT, password TEXT)',
         );
       },
       version: 1,

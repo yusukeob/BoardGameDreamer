@@ -24,7 +24,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     _formKey.currentState?.save();
     if (_username != "" && _password != "" && _password == _checkPassword) {
       User user = User(
-          id: 1,
+          id: 0,
           username: _username.toString(),
           password: _password.toString());
       SqliteService().createUser(user);
