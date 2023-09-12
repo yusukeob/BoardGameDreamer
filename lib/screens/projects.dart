@@ -1,6 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:board_game_dreamer/main.dart';
-import 'package:board_game_dreamer/services/sqlite_service.dart';
 
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({super.key});
@@ -13,11 +14,12 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> {
-  String _sUsers = "Project List";
-  void _getUsers() async {
-    var users = await SqliteService().getAllUsers();
-    _sUsers = users.toString();
-    setState(() {});
+  bool _addProject = true;
+
+  void _switchAddProject() {
+    setState(() {
+      _addProject = !_addProject;
+    });
   }
 
   @override
@@ -28,41 +30,33 @@ class _ProjectsPageState extends State<ProjectsPage> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(height: 30),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: Stack(
-                  children: <Widget>[
-                    Positioned.fill(
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: <Color>[
-                              Color(0xFF0D47A1),
-                              Color(0xFF1976D2),
-                              Color(0xFF42A5F5),
-                            ],
-                          ),
-                        ),
-                      ),
+          padding: const EdgeInsets.only(top: 40),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Visibility(
+                  visible: _addProject,
+                  child: Ink(
+                    decoration: const ShapeDecoration(
+                      color: Colors.lightBlue,
+                      shape: CircleBorder(),
                     ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.all(16.0),
-                        textStyle: const TextStyle(fontSize: 20),
-                      ),
-                      onPressed: _getUsers,
-                      child: Text(_sUsers),
+                    child: IconButton(
+                      iconSize: 100,
+                      icon: const Icon(Icons.add),
+                      color: Colors.white,
+                      onPressed: _switchAddProject,
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                Visibility(
+                  visible: !_addProject,
+                  child: const Text("hello"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
