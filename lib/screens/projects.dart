@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:board_game_dreamer/main.dart';
 import 'package:board_game_dreamer/models/project.dart';
 import 'package:board_game_dreamer/services/sqlite_projects_service.dart';
+import 'package:board_game_dreamer/screens/project.dart';
 
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({super.key});
@@ -45,6 +46,14 @@ class _ProjectsPageState extends State<ProjectsPage> {
       }
     }
     setState(() {});
+  }
+
+  void _goToProject(int projectId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const ProjectPage(),
+      ),
+    );
   }
 
   @override
@@ -103,10 +112,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
                   child: Visibility(
                     visible: !_addProject,
                     child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 16),
                       child: TextField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Enter Project Name',
                         ),
@@ -122,14 +131,23 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     visible: projectList.isNotEmpty,
                     child: ListView.builder(
                       shrinkWrap: true,
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       itemCount: projectList.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          height: 50,
-                          color: Colors.amber[100],
-                          child: Center(
-                              child: Text(projectList[index].projectname)),
+                        return ListTile(
+                          title: Text(projectList[index].projectname),
+                          shape: const Border(
+                            top: BorderSide(color: Colors.lightBlue, width: 0),
+                            right:
+                                BorderSide(color: Colors.lightBlue, width: 0),
+                            left: BorderSide(color: Colors.lightBlue, width: 0),
+                            bottom:
+                                BorderSide(color: Colors.lightBlue, width: 1),
+                          ),
+                          onTap: () {
+                            _goToProject(projectList[index].id);
+                          },
                         );
                       },
                     ),
