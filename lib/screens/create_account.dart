@@ -1,6 +1,6 @@
 import 'package:board_game_dreamer/screens/login.dart';
 import 'package:board_game_dreamer/models/user.dart';
-import 'package:board_game_dreamer/services/sqlite_service.dart';
+import 'package:board_game_dreamer/services/sqlite_users_service.dart';
 import 'package:flutter/material.dart';
 import 'package:board_game_dreamer/main.dart';
 
@@ -27,7 +27,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
           id: 0,
           username: _username.toString(),
           password: _password.toString());
-      SqliteService().createUser(user);
+      SqliteUsersService().createUser(user);
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => const LoginPage(),

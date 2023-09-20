@@ -2,8 +2,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import 'package:board_game_dreamer/models/user.dart';
-
 class SqliteService {
   Future<Database> initializeDB() async {
     final dbDirectory = await getApplicationSupportDirectory();
@@ -11,31 +9,12 @@ class SqliteService {
     return openDatabase(
       join(dbDirectory.path, 'board_game_dreamer_database.db'),
       onCreate: (database, version) async {
-        return database.execute(
-          'CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT, password TEXT)',
-        );
+        await database.execute(
+            'CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT, password TEXT)');
+        await database.execute(
+            'CREATE TABLE projects(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, projectname TEXT, userid INTEGER)');
       },
       version: 1,
     );
-  }
-
-  Future<int> createUser(User user) async {
-    final Database db = await initializeDB();
-    final id = await db.insert('users', user.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
-    return id;
-  }
-
-  Future<List<User>> getAllUsers() async {
-    final Database db = await initializeDB();
-    List<Map> results =
-        await db.query("users", columns: User.columns, orderBy: "id ASC");
-
-    List<User> users = List<User>.filled(
-        results.length, const User(id: 0, username: "", password: ""));
-    for (int i = 0; i < results.length; i++) {
-      users[i] = User.fromMap(results[i]);
-    }
-    return users;
   }
 }
