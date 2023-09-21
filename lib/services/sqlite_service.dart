@@ -13,6 +13,8 @@ class SqliteService {
             'CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT, password TEXT)');
         await database.execute(
             'CREATE TABLE projects(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, projectname TEXT, userid INTEGER)');
+        await database.execute(
+            'CREATE TABLE project_flow_charts(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, flowchartname TEXT, userid INTEGER, projectid INTEGER)');
       },
       version: 1,
     );
