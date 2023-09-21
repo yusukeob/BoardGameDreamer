@@ -51,7 +51,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   void _goToProject(int projectId) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const ProjectPage(),
+        builder: (context) => ProjectPage(projectId: projectId),
       ),
     );
   }

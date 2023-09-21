@@ -26,4 +26,16 @@ class SqliteProjectsService {
     }
     return projects;
   }
+
+  Future<Project> getUserProject(int projectId) async {
+    final Database db = await SqliteService().initializeDB();
+    List<Map> results = await db.query("projects",
+        where: "id = ?", whereArgs: [projectId], columns: Project.columns);
+
+    Project project = const Project(id: 0, projectname: "", userid: 0);
+    for (int i = 0; i < results.length; i++) {
+      project = Project.fromMap(results[i]);
+    }
+    return project;
+  }
 }
