@@ -87,8 +87,8 @@ class _FlowChartPageState extends State<FlowChartsPage> {
           child: Align(
             alignment: Alignment.topCenter,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -103,6 +103,22 @@ class _FlowChartPageState extends State<FlowChartsPage> {
                       project.projectname,
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 30, color: Colors.white),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 8.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.lightBlue,
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child: const Text(
+                      FlowChartsPage.pageName,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30, color: Colors.white),
                     ),
                   ),
                 ),
