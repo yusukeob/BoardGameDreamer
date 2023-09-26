@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:board_game_dreamer/main.dart';
 import 'package:board_game_dreamer/models/project.dart';
 import 'package:board_game_dreamer/screens/flow_charts.dart';
+import 'package:board_game_dreamer/screens/mechanics.dart';
 import 'package:board_game_dreamer/services/sqlite_projects_service.dart';
 
 class ProjectPage extends StatefulWidget {
@@ -40,6 +41,8 @@ class _ProjectPageState extends State<ProjectPage> {
   void _goToMenu(String menuItem) {
     if (menuItem == "Flow Charts") {
       _goToFlowCharts();
+    } else if (menuItem == "Mechanics") {
+      _goToMechanics();
     }
   }
 
@@ -47,6 +50,14 @@ class _ProjectPageState extends State<ProjectPage> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => FlowChartsPage(projectId: projectId),
+      ),
+    );
+  }
+
+  void _goToMechanics() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => MechanicsPage(projectId: projectId),
       ),
     );
   }
