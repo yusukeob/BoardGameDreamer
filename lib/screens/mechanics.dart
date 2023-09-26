@@ -25,7 +25,7 @@ class _MechanicsPageState extends State<MechanicsPage> {
   late List<Mechanic> mechanicList = <Mechanic>[];
   late List<ProjectMechanic> projectMechanicList = <ProjectMechanic>[];
   bool _addProjectMechanic = true;
-  final ProjectMechanic _selectedProjectMechanic = ProjectMechanic(
+  ProjectMechanic _selectedProjectMechanic = ProjectMechanic(
       id: 0,
       mechanicname: "",
       mechanicexplanation: "",
@@ -33,6 +33,7 @@ class _MechanicsPageState extends State<MechanicsPage> {
       userid: 0,
       mechanicid: 0,
       projectapplication: "");
+  String selectedMechanicName = "";
 
   @override
   void initState() {
@@ -66,6 +67,7 @@ class _MechanicsPageState extends State<MechanicsPage> {
   }
 
   void _addNewProjectMechanic() async {
+    _mechanicNameSelected();
     if (_selectedProjectMechanic.mechanicname != "") {
       ProjectMechanic projectMechanic = ProjectMechanic(
           id: 0,
@@ -78,6 +80,7 @@ class _MechanicsPageState extends State<MechanicsPage> {
       int success = await SqliteProjectMechanicsService()
           .createProjectMechanic(projectMechanic);
       if (success > 0) {
+        selectedMechanicName = "";
         _switchAddProjectMechanic();
         _getProjectMechanics();
       }
@@ -91,6 +94,27 @@ class _MechanicsPageState extends State<MechanicsPage> {
     //     builder: (context) => FlowChartsPage(projectId: projectId),
     //   ),
     // );
+  }
+
+  void _mechanicNameSelected() {
+    _selectedProjectMechanic = ProjectMechanic(
+        id: 0,
+        mechanicname: selectedMechanicName,
+        mechanicexplanation: "",
+        projectid: 0,
+        userid: 0,
+        mechanicid: 0,
+        projectapplication: "");
+
+    for (int i = 0; i < mechanicList.length; i++) {
+      if (selectedMechanicName == mechanicList[i].mechanicname) {
+        _selectedProjectMechanic.mechanicid = mechanicList[i].id;
+        _selectedProjectMechanic.mechanicexplanation =
+            mechanicList[i].mechanicexplanation;
+        break;
+      }
+    }
+    setState(() {});
   }
 
   @override
@@ -183,13 +207,23 @@ class _MechanicsPageState extends State<MechanicsPage> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 16),
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Enter Mechanic Name',
-                        ),
-                        onChanged: (text) {
-                          _selectedProjectMechanic.mechanicname = text;
+                      child: Autocomplete<String>(
+                        optionsBuilder: (TextEditingValue textEditingValue) {
+                          if (textEditingValue.text == '') {
+                            return const Iterable<String>.empty();
+                          }
+                          selectedMechanicName = textEditingValue.text;
+                          return mechanicList
+                              .map((e) => e.mechanicname)
+                              .where((String mechanicname) {
+                            return mechanicname
+                                .toLowerCase()
+                                .contains(textEditingValue.text.toLowerCase());
+                          });
+                        },
+                        onSelected: (String selection) {
+                          selectedMechanicName = selection;
+                          _mechanicNameSelected();
                         },
                       ),
                     ),
