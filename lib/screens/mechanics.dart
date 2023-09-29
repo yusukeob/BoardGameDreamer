@@ -34,6 +34,8 @@ class _MechanicsPageState extends State<MechanicsPage> {
       mechanicid: 0,
       projectapplication: "");
   String selectedMechanicName = "";
+  bool _isEditModeProjectMechanicExplanation = false;
+  bool _isEditModeProjectMechanicApplication = false;
 
   @override
   void initState() {
@@ -108,6 +110,10 @@ class _MechanicsPageState extends State<MechanicsPage> {
     }
     setState(() {});
   }
+
+  // _editProjectMechanicDescription(ProjectMechanic projectMechanic) {}
+
+  // _editProjectMechanicApplication(ProjectMechanic projectMechanic) {}
 
   @override
   Widget build(BuildContext context) {
@@ -236,28 +242,122 @@ class _MechanicsPageState extends State<MechanicsPage> {
                             builder: (BuildContext context) => AlertDialog(
                               title:
                                   Text(projectMechanicList[index].mechanicname),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  const Text("Description:",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  Text(projectMechanicList[index]
-                                      .mechanicexplanation),
-                                  const Text("Application:",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  Text(projectMechanicList[index]
-                                      .projectapplication),
-                                ],
+                              content: StatefulBuilder(
+                                builder: (BuildContext context,
+                                    StateSetter setState) {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Ink(
+                                        height: 30,
+                                        width: 30,
+                                        decoration: const ShapeDecoration(
+                                          color: Colors.lightGreen,
+                                          shape: CircleBorder(),
+                                        ),
+                                        child: IconButton(
+                                          iconSize: 15,
+                                          icon: const Icon(Icons.edit),
+                                          color: Colors.white,
+                                          onPressed: () {
+                                            setState(() {
+                                              _isEditModeProjectMechanicExplanation =
+                                                  true;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          const Text("Description: ",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Expanded(
+                                            child: Column(
+                                              children: <Widget>[
+                                                Visibility(
+                                                  visible:
+                                                      !_isEditModeProjectMechanicExplanation,
+                                                  child: Text(
+                                                      projectMechanicList[index]
+                                                          .mechanicexplanation),
+                                                ),
+                                                Visibility(
+                                                  visible:
+                                                      _isEditModeProjectMechanicExplanation,
+                                                  child: TextFormField(
+                                                    initialValue:
+                                                        projectMechanicList[
+                                                                index]
+                                                            .mechanicexplanation,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Ink(
+                                        height: 30,
+                                        width: 30,
+                                        decoration: const ShapeDecoration(
+                                          color: Colors.lightGreen,
+                                          shape: CircleBorder(),
+                                        ),
+                                        child: IconButton(
+                                          iconSize: 15,
+                                          icon: const Icon(Icons.edit),
+                                          color: Colors.white,
+                                          onPressed: () {
+                                            setState(() {
+                                              _isEditModeProjectMechanicApplication =
+                                                  true;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          const Text("Application: ",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Expanded(
+                                            child:
+                                                !_isEditModeProjectMechanicApplication
+                                                    ? Text(projectMechanicList[
+                                                            index]
+                                                        .projectapplication)
+                                                    : TextFormField(
+                                                        initialValue:
+                                                            projectMechanicList[
+                                                                    index]
+                                                                .projectapplication,
+                                                      ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        textDirection: TextDirection.ltr,
+                                        children: <Widget>[
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context, 'OK'),
+                                            child: const Text('Close'),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                },
                               ),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context, 'OK'),
-                                  child: const Text('Close'),
-                                ),
-                              ],
                             ),
                           ),
                           title: Text(projectMechanicList[index].mechanicname),
