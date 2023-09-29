@@ -75,7 +75,7 @@ class _MechanicsPageState extends State<MechanicsPage> {
           mechanicexplanation: _selectedProjectMechanic.mechanicexplanation,
           userid: 1,
           projectid: projectId,
-          mechanicid: _selectedProjectMechanic.id,
+          mechanicid: _selectedProjectMechanic.mechanicid,
           projectapplication: _selectedProjectMechanic.projectapplication);
       int success = await SqliteProjectMechanicsService()
           .createProjectMechanic(projectMechanic);
@@ -86,14 +86,6 @@ class _MechanicsPageState extends State<MechanicsPage> {
       }
     }
     setState(() {});
-  }
-
-  void _showMechanicExplanation(int mechanicId) {
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (context) => FlowChartsPage(projectId: projectId),
-    //   ),
-    // );
   }
 
   void _mechanicNameSelected() {
@@ -239,6 +231,35 @@ class _MechanicsPageState extends State<MechanicsPage> {
                       itemCount: projectMechanicList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
+                          onTap: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title:
+                                  Text(projectMechanicList[index].mechanicname),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  const Text("Description:",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  Text(projectMechanicList[index]
+                                      .mechanicexplanation),
+                                  const Text("Application:",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  Text(projectMechanicList[index]
+                                      .projectapplication),
+                                ],
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('Close'),
+                                ),
+                              ],
+                            ),
+                          ),
                           title: Text(projectMechanicList[index].mechanicname),
                           shape: const Border(
                             top: BorderSide(color: Colors.lightBlue, width: 0),
@@ -248,10 +269,6 @@ class _MechanicsPageState extends State<MechanicsPage> {
                             bottom:
                                 BorderSide(color: Colors.lightBlue, width: 1),
                           ),
-                          onTap: () {
-                            _showMechanicExplanation(
-                                projectMechanicList[index].mechanicid);
-                          },
                         );
                       },
                     ),
