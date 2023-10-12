@@ -111,6 +111,8 @@ class _MechanicsPageState extends State<MechanicsPage> {
     setState(() {});
   }
 
+  _saveProjectMechanicExplanation(ProjectMechanic projectMechanic) {}
+
   // _editProjectMechanicDescription(ProjectMechanic projectMechanic) {}
 
   // _editProjectMechanicApplication(ProjectMechanic projectMechanic) {}
@@ -250,24 +252,83 @@ class _MechanicsPageState extends State<MechanicsPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Ink(
-                                        height: 30,
-                                        width: 30,
-                                        decoration: const ShapeDecoration(
-                                          color: Colors.lightGreen,
-                                          shape: CircleBorder(),
+                                      Visibility(
+                                        visible:
+                                            !_isEditModeProjectMechanicExplanation,
+                                        child: Ink(
+                                          height: 30,
+                                          width: 30,
+                                          decoration: const ShapeDecoration(
+                                            color: Colors.grey,
+                                            shape: CircleBorder(),
+                                          ),
+                                          child: IconButton(
+                                            iconSize: 15,
+                                            icon: const Icon(Icons.edit),
+                                            color: Colors.white,
+                                            onPressed: () {
+                                              setState(() {
+                                                _isEditModeProjectMechanicExplanation =
+                                                    true;
+                                              });
+                                            },
+                                          ),
                                         ),
-                                        child: IconButton(
-                                          iconSize: 15,
-                                          icon: const Icon(Icons.edit),
-                                          color: Colors.white,
-                                          onPressed: () {
-                                            setState(() {
-                                              _isEditModeProjectMechanicExplanation =
-                                                  true;
-                                            });
-                                          },
-                                        ),
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Visibility(
+                                            visible:
+                                                _isEditModeProjectMechanicExplanation,
+                                            child: Ink(
+                                              height: 30,
+                                              width: 30,
+                                              decoration: const ShapeDecoration(
+                                                color: Colors.red,
+                                                shape: CircleBorder(),
+                                              ),
+                                              child: IconButton(
+                                                iconSize: 15,
+                                                icon: const Icon(Icons.cancel),
+                                                color: Colors.white,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _isEditModeProjectMechanicExplanation =
+                                                        false;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          const Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 5)),
+                                          Visibility(
+                                            visible:
+                                                _isEditModeProjectMechanicExplanation,
+                                            child: Ink(
+                                              height: 30,
+                                              width: 30,
+                                              decoration: const ShapeDecoration(
+                                                color: Colors.green,
+                                                shape: CircleBorder(),
+                                              ),
+                                              child: IconButton(
+                                                iconSize: 15,
+                                                icon: const Icon(Icons.check),
+                                                color: Colors.white,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _isEditModeProjectMechanicExplanation =
+                                                        false;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       Row(
                                         crossAxisAlignment:
@@ -290,6 +351,8 @@ class _MechanicsPageState extends State<MechanicsPage> {
                                                   visible:
                                                       _isEditModeProjectMechanicExplanation,
                                                   child: TextFormField(
+                                                    minLines: 1,
+                                                    maxLines: 5,
                                                     initialValue:
                                                         projectMechanicList[
                                                                 index]
@@ -301,24 +364,83 @@ class _MechanicsPageState extends State<MechanicsPage> {
                                           ),
                                         ],
                                       ),
-                                      Ink(
-                                        height: 30,
-                                        width: 30,
-                                        decoration: const ShapeDecoration(
-                                          color: Colors.lightGreen,
-                                          shape: CircleBorder(),
+                                      Visibility(
+                                        visible:
+                                            !_isEditModeProjectMechanicApplication,
+                                        child: Ink(
+                                          height: 30,
+                                          width: 30,
+                                          decoration: const ShapeDecoration(
+                                            color: Colors.grey,
+                                            shape: CircleBorder(),
+                                          ),
+                                          child: IconButton(
+                                            iconSize: 15,
+                                            icon: const Icon(Icons.edit),
+                                            color: Colors.white,
+                                            onPressed: () {
+                                              setState(() {
+                                                _isEditModeProjectMechanicApplication =
+                                                    true;
+                                              });
+                                            },
+                                          ),
                                         ),
-                                        child: IconButton(
-                                          iconSize: 15,
-                                          icon: const Icon(Icons.edit),
-                                          color: Colors.white,
-                                          onPressed: () {
-                                            setState(() {
-                                              _isEditModeProjectMechanicApplication =
-                                                  true;
-                                            });
-                                          },
-                                        ),
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Visibility(
+                                            visible:
+                                                _isEditModeProjectMechanicApplication,
+                                            child: Ink(
+                                              height: 30,
+                                              width: 30,
+                                              decoration: const ShapeDecoration(
+                                                color: Colors.red,
+                                                shape: CircleBorder(),
+                                              ),
+                                              child: IconButton(
+                                                iconSize: 15,
+                                                icon: const Icon(Icons.cancel),
+                                                color: Colors.white,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _isEditModeProjectMechanicApplication =
+                                                        false;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          const Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 5)),
+                                          Visibility(
+                                            visible:
+                                                _isEditModeProjectMechanicApplication,
+                                            child: Ink(
+                                              height: 30,
+                                              width: 30,
+                                              decoration: const ShapeDecoration(
+                                                color: Colors.green,
+                                                shape: CircleBorder(),
+                                              ),
+                                              child: IconButton(
+                                                iconSize: 15,
+                                                icon: const Icon(Icons.check),
+                                                color: Colors.white,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _isEditModeProjectMechanicApplication =
+                                                        false;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       Row(
                                         crossAxisAlignment:
@@ -348,8 +470,13 @@ class _MechanicsPageState extends State<MechanicsPage> {
                                         textDirection: TextDirection.ltr,
                                         children: <Widget>[
                                           TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context, 'OK'),
+                                            onPressed: () => {
+                                              _isEditModeProjectMechanicApplication =
+                                                  false,
+                                              _isEditModeProjectMechanicExplanation =
+                                                  false,
+                                              Navigator.pop(context, 'OK'),
+                                            },
                                             child: const Text('Close'),
                                           ),
                                         ],
