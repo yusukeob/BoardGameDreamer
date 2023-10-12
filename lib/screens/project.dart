@@ -3,6 +3,7 @@ import 'package:board_game_dreamer/main.dart';
 import 'package:board_game_dreamer/models/project.dart';
 import 'package:board_game_dreamer/screens/flow_charts.dart';
 import 'package:board_game_dreamer/screens/mechanics.dart';
+import 'package:board_game_dreamer/screens/files.dart';
 import 'package:board_game_dreamer/services/sqlite_projects_service.dart';
 
 class ProjectPage extends StatefulWidget {
@@ -43,6 +44,8 @@ class _ProjectPageState extends State<ProjectPage> {
       _goToFlowCharts();
     } else if (menuItem == "Mechanics") {
       _goToMechanics();
+    } else if (menuItem == "Files") {
+      _goToFiles();
     }
   }
 
@@ -58,6 +61,14 @@ class _ProjectPageState extends State<ProjectPage> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => MechanicsPage(projectId: projectId),
+      ),
+    );
+  }
+
+  void _goToFiles() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => FilesPage(projectId: projectId),
       ),
     );
   }

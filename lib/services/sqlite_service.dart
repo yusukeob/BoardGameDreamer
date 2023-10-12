@@ -20,6 +20,8 @@ class SqliteService {
             'CREATE TABLE mechanics(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, mechanicname TEXT, mechanicexplanation TEXT)');
         await database.execute(
             'CREATE TABLE project_mechanics(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, mechanicname TEXT, mechanicexplanation TEXT, userid INTEGER, projectid INTEGER, mechanicid INTEGER, projectapplication TEXT)');
+        await database.execute(
+            'CREATE TABLE files(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, filename TEXT, filecontent TEXT, userid INTEGER, projectid INTEGER)');
         await database.rawInsert(
             'INSERT INTO "mechanics"("mechanicname", "mechanicexplanation") VALUES("Worker Placement", "Place tokens or workers on spaces to perform actions."),("Auction", "Bid a secret amount to achieve an object, such as priority for deciding turn order."), ("Deck Building", "Build your deck from a choice of cards. There are usually certain limitations but also freedom in choosing.");');
       },
