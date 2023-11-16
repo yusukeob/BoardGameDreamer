@@ -6,6 +6,7 @@ import 'package:board_game_dreamer/models/mechanic.dart';
 import 'package:board_game_dreamer/services/sqlite_projects_service.dart';
 import 'package:board_game_dreamer/services/sqlite_project_mechanics_service.dart';
 import 'package:board_game_dreamer/services/sqlite_mechanics_service.dart';
+import 'package:board_game_dreamer/widgets/mechanic_icon.dart';
 
 class MechanicsPage extends StatefulWidget {
   final int projectId;
@@ -119,6 +120,8 @@ class _MechanicsPageState extends State<MechanicsPage> {
 
   @override
   Widget build(BuildContext context) {
+    const Widget mechanicIcon =
+        MechanicIcon(iconData: Icons.add, color: Colors.green);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -199,6 +202,10 @@ class _MechanicsPageState extends State<MechanicsPage> {
                       ),
                     ),
                   ),
+                ),
+                Visibility(
+                  visible: !_addProjectMechanic,
+                  child: mechanicIcon,
                 ),
                 SizedBox(
                   height: 150,
