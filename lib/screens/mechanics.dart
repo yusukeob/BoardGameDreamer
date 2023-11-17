@@ -1,3 +1,4 @@
+import 'package:board_game_dreamer/widgets/mechanic_selected_effect.dart';
 import 'package:flutter/material.dart';
 import 'package:board_game_dreamer/main.dart';
 import 'package:board_game_dreamer/models/project.dart';
@@ -22,6 +23,7 @@ class MechanicsPage extends StatefulWidget {
 class _MechanicsPageState extends State<MechanicsPage> {
   Widget mechanicIcon =
       const MechanicIcon(iconData: Icons.money, color: Colors.grey);
+  Widget mechanicSelectedEffect = const MechanicSelectedEffect();
 
   int projectId = 0;
   int userId = 1;
@@ -213,11 +215,20 @@ class _MechanicsPageState extends State<MechanicsPage> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 100,
-                  child: Visibility(
-                    visible: _isDefaultMechanic,
-                    child: mechanicIcon,
+                Visibility(
+                  visible: _isDefaultMechanic,
+                  child: SizedBox(
+                    height: 100,
+                    child: Visibility(
+                      child: mechanicIcon,
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: !_isDefaultMechanic,
+                  child: SizedBox(
+                    height: 100,
+                    child: mechanicSelectedEffect,
                   ),
                 ),
                 SizedBox(
@@ -512,10 +523,6 @@ class _MechanicsPageState extends State<MechanicsPage> {
                           ),
                           title: Text(projectMechanicList[index].mechanicname),
                           shape: const Border(
-                            top: BorderSide(color: Colors.lightBlue, width: 0),
-                            right:
-                                BorderSide(color: Colors.lightBlue, width: 0),
-                            left: BorderSide(color: Colors.lightBlue, width: 0),
                             bottom:
                                 BorderSide(color: Colors.lightBlue, width: 1),
                           ),
