@@ -20,6 +20,9 @@ class MechanicsPage extends StatefulWidget {
 }
 
 class _MechanicsPageState extends State<MechanicsPage> {
+  Widget mechanicIcon =
+      const MechanicIcon(iconData: Icons.money, color: Colors.grey);
+
   int projectId = 0;
   int userId = 1;
   late Project project = const Project(id: 0, projectname: "", userid: 0);
@@ -37,6 +40,7 @@ class _MechanicsPageState extends State<MechanicsPage> {
   String selectedMechanicName = "";
   bool _isEditModeProjectMechanicExplanation = false;
   bool _isEditModeProjectMechanicApplication = false;
+  bool _isDefaultMechanic = false;
 
   @override
   void initState() {
@@ -84,6 +88,7 @@ class _MechanicsPageState extends State<MechanicsPage> {
           .createProjectMechanic(projectMechanic);
       if (success > 0) {
         selectedMechanicName = "";
+        _isDefaultMechanic = false;
         _switchAddProjectMechanic();
         _getProjectMechanics();
       }
@@ -92,6 +97,7 @@ class _MechanicsPageState extends State<MechanicsPage> {
   }
 
   void _mechanicNameSelected() {
+    _isDefaultMechanic = false;
     _selectedProjectMechanic = ProjectMechanic(
         id: 0,
         mechanicname: selectedMechanicName,
@@ -106,13 +112,19 @@ class _MechanicsPageState extends State<MechanicsPage> {
         _selectedProjectMechanic.mechanicid = mechanicList[i].id;
         _selectedProjectMechanic.mechanicexplanation =
             mechanicList[i].mechanicexplanation;
+        IconData? iconData = Icons.money;
+        if (mechanicIcons.containsKey(mechanicList[i].mechanicname)) {
+          iconData = mechanicIcons[mechanicList[i].mechanicname];
+        }
+        mechanicIcon = MechanicIcon(iconData: iconData, color: Colors.grey);
+        _isDefaultMechanic = true;
         break;
       }
     }
     setState(() {});
   }
 
-  _saveProjectMechanicExplanation(ProjectMechanic projectMechanic) {}
+  // _saveProjectMechanicExplanation(ProjectMechanic projectMechanic) {}
 
   // _editProjectMechanicDescription(ProjectMechanic projectMechanic) {}
 
@@ -120,8 +132,6 @@ class _MechanicsPageState extends State<MechanicsPage> {
 
   @override
   Widget build(BuildContext context) {
-    const Widget mechanicIcon =
-        MechanicIcon(iconData: Icons.add, color: Colors.green);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -203,12 +213,15 @@ class _MechanicsPageState extends State<MechanicsPage> {
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: !_addProjectMechanic,
-                  child: mechanicIcon,
+                SizedBox(
+                  height: 100,
+                  child: Visibility(
+                    visible: _isDefaultMechanic,
+                    child: mechanicIcon,
+                  ),
                 ),
                 SizedBox(
-                  height: 150,
+                  height: 110,
                   child: Visibility(
                     visible: !_addProjectMechanic,
                     child: Padding(
@@ -216,6 +229,9 @@ class _MechanicsPageState extends State<MechanicsPage> {
                           horizontal: 8, vertical: 16),
                       child: Autocomplete<String>(
                         optionsBuilder: (TextEditingValue textEditingValue) {
+                          setState(() {
+                            _isDefaultMechanic = false;
+                          });
                           if (textEditingValue.text == '') {
                             return const Iterable<String>.empty();
                           }

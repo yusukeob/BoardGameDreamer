@@ -7,7 +7,7 @@ class MechanicIcon extends StatelessWidget {
     required this.color,
   });
 
-  final IconData iconData;
+  final IconData? iconData;
   final Color color;
 
   @override
@@ -19,3 +19,9 @@ class MechanicIcon extends StatelessWidget {
     );
   }
 }
+
+final mechanicIcons = <String, IconData>{
+  "Auction": Icons.money,
+  "Deck Building": Icons.style,
+  "Worker Placement": Icons.engineering,
+};
