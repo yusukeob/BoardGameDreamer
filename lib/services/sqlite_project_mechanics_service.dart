@@ -18,7 +18,7 @@ class SqliteProjectMechanicsService {
         where: "userid = ? AND projectid = ?",
         whereArgs: [userId, projectId],
         columns: ProjectMechanic.columns,
-        orderBy: "id ASC");
+        orderBy: "id DESC");
 
     List<ProjectMechanic> projectMechanics = List<ProjectMechanic>.filled(
         results.length,

@@ -17,13 +17,14 @@ class _MechanicSelectedEffect extends State<MechanicSelectedEffect>
 
   @override
   void initState() {
-    animationcontroller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    animationcontroller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
 
     animationcontroller?.play();
 
     animation = Tween<double>(begin: 100, end: 0).animate(animationcontroller ??
-        AnimationController(vsync: this, duration: const Duration(seconds: 1)));
+        AnimationController(
+            vsync: this, duration: const Duration(milliseconds: 500)));
 
     animation?.addListener(() {
       setState(() {});
