@@ -1,5 +1,5 @@
 import 'package:board_game_dreamer/screens/create_account.dart';
-import 'package:board_game_dreamer/screens/home.dart';
+import 'package:board_game_dreamer/screens/projects.dart';
 import 'package:flutter/material.dart';
 import 'package:board_game_dreamer/main.dart';
 
@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
     if (_username == "yob" && _password == "yob") {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => const HomePage(),
+          builder: (context) => const ProjectsPage(),
         ),
       );
     }
