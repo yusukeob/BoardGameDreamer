@@ -117,16 +117,6 @@ class _ProjectPageState extends State<ProjectPage> {
                         return Card(
                           child: ListTile(
                             title: Text(projectMenu[index]),
-                            shape: const Border(
-                              top:
-                                  BorderSide(color: Colors.lightBlue, width: 0),
-                              right:
-                                  BorderSide(color: Colors.lightBlue, width: 0),
-                              left:
-                                  BorderSide(color: Colors.lightBlue, width: 0),
-                              bottom:
-                                  BorderSide(color: Colors.lightBlue, width: 1),
-                            ),
                             trailing: IconButton(
                                 icon: const Icon(Icons.more_vert),
                                 onPressed: () {
