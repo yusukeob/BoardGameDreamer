@@ -1,10 +1,19 @@
 import 'package:board_game_dreamer/screens/login.dart';
 import 'package:board_game_dreamer/services/sqlite_service.dart';
+import 'package:board_game_dreamer/models/project_mechanics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ProjectMechanicsProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 
   SqliteService().initializeDB();
 }

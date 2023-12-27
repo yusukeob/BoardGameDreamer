@@ -1,3 +1,4 @@
+import 'package:board_game_dreamer/models/project_mechanics.dart';
 import 'package:flutter/material.dart';
 import 'package:board_game_dreamer/main.dart';
 import 'package:board_game_dreamer/models/project.dart';
@@ -5,6 +6,7 @@ import 'package:board_game_dreamer/screens/flow_charts.dart';
 import 'package:board_game_dreamer/screens/mechanics.dart';
 import 'package:board_game_dreamer/screens/files.dart';
 import 'package:board_game_dreamer/services/sqlite_projects_service.dart';
+import 'package:provider/provider.dart';
 
 class ProjectPage extends StatefulWidget {
   final int projectId;
@@ -75,60 +77,137 @@ class _ProjectPageState extends State<ProjectPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 40),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 0.0, left: 8.0, right: 8.0, bottom: 16.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.lightBlue,
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Text(
-                      project.projectname,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 30, color: Colors.white),
+    return Consumer<ProjectMechanicsProvider>(
+        builder: (context, projectMechanicsProvider, child) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 0.0, left: 8.0, right: 8.0, bottom: 16.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Colors.lightBlue,
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      child: Text(
+                        project.projectname,
+                        textAlign: TextAlign.center,
+                        style:
+                            const TextStyle(fontSize: 30, color: Colors.white),
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    itemCount: projectMenu.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        title: Text(projectMenu[index]),
-                        shape: const Border(
-                          top: BorderSide(color: Colors.lightBlue, width: 0),
-                          right: BorderSide(color: Colors.lightBlue, width: 0),
-                          left: BorderSide(color: Colors.lightBlue, width: 0),
-                          bottom: BorderSide(color: Colors.lightBlue, width: 1),
-                        ),
-                        onTap: () {
-                          _goToMenu(projectMenu[index]);
-                        },
-                      );
-                    },
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      itemCount: projectMenu.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                          child: ListTile(
+                            title: Text(projectMenu[index]),
+                            shape: const Border(
+                              top:
+                                  BorderSide(color: Colors.lightBlue, width: 0),
+                              right:
+                                  BorderSide(color: Colors.lightBlue, width: 0),
+                              left:
+                                  BorderSide(color: Colors.lightBlue, width: 0),
+                              bottom:
+                                  BorderSide(color: Colors.lightBlue, width: 1),
+                            ),
+                            trailing: IconButton(
+                                icon: const Icon(Icons.more_vert),
+                                onPressed: () {
+                                  // _showMenuItems(projectMenu[index]);
+                                  showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                            scrollable: true,
+                                            title: const Text('Menu Items'),
+                                            content: SizedBox(
+                                              width: 100,
+                                              height: 100,
+                                              child: SingleChildScrollView(
+                                                child: ListView.builder(
+                                                  shrinkWrap: true,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 8),
+                                                  itemCount:
+                                                      projectMechanicsProvider
+                                                          .projectMechanicNames
+                                                          .length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    return Card(
+                                                      child: ListTile(
+                                                        title: Text(
+                                                            projectMechanicsProvider
+                                                                    .projectMechanicNames[
+                                                                index]),
+                                                        shape: const Border(
+                                                          top: BorderSide(
+                                                              color: Colors
+                                                                  .lightBlue,
+                                                              width: 0),
+                                                          right: BorderSide(
+                                                              color: Colors
+                                                                  .lightBlue,
+                                                              width: 0),
+                                                          left: BorderSide(
+                                                              color: Colors
+                                                                  .lightBlue,
+                                                              width: 0),
+                                                          bottom: BorderSide(
+                                                              color: Colors
+                                                                  .lightBlue,
+                                                              width: 1),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('Close'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          ));
+                                }),
+                            onTap: () {
+                              _goToMenu(projectMenu[index]);
+                            },
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
